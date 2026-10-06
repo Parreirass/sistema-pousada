@@ -7,6 +7,7 @@ import { Reservations } from './pages/Reservations';
 import { CalendarPage } from './pages/CalendarPage';
 import { Dashboard } from './pages/Dashboard';
 import { Reports } from './pages/Reports';
+import { Guests } from './pages/Guests';
 
 // Proteção de rotas
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="calendar" element={<CalendarPage />} />
         <Route path="reports" element={<Reports />} /> {/* <-- ADICIONE ESTA LINHA */}
         <Route path="reservations" element={<Reservations />} />
+        <Route path="guests" element={<Guests />} />
       </Route>
     </Routes>
   );

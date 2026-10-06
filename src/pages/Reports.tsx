@@ -6,9 +6,16 @@ import { Download, TrendingUp, CalendarDays, BedDouble, DollarSign } from 'lucid
 
 type Room = { id: string; name: string };
 type Reservation = {
-  id: string; check_in: string; check_out: string; 
-  guest_name: string; guest_count: number; total_price: number; 
-  status: string; room_id: string; room: { name: string };
+  id: string; 
+  check_in: string; 
+  check_out: string; 
+  guest_name: string; 
+  guest_count: number; 
+  total_price: number; 
+  status: string; 
+  room_id: string; 
+  room: { name: string };
+  guest?: { name: string };
 };
 
 export function Reports() {
@@ -48,7 +55,7 @@ export function Reports() {
     
     let query = supabase
       .from('reservations')
-      .select('*, room:rooms(name)')
+      .select('*, room:rooms(name), guest:guests(name)')
       .gte('check_in', startDate)
       .lte('check_in', endDate);
 
@@ -102,7 +109,7 @@ export function Reports() {
       const nights = differenceInDays(parseISO(r.check_out), parseISO(r.check_in));
       return [
         r.id,
-        `"${r.guest_name}"`, // Aspas para evitar quebra se tiver vírgula no nome
+        `"${r.guest?.name || r.guest_name}"`, // Aspas para evitar quebra se tiver vírgula no nome
         `"${r.room?.name || ''}"`,
         format(parseISO(r.check_in), 'dd/MM/yyyy'),
         format(parseISO(r.check_out), 'dd/MM/yyyy'),
@@ -209,7 +216,7 @@ export function Reports() {
               <tbody className="divide-y divide-gray-200 text-sm">
                 {reservations.map(res => (
                   <tr key={res.id} className="hover:bg-gray-50">
-                    <td className="p-4 font-medium text-gray-900">{res.guest_name}</td>
+                    <td className="p-4 font-medium text-gray-900">{res.guest?.name || res.guest_name}</td>
                     <td className="p-4 text-gray-600">{res.room?.name}</td>
                     <td className="p-4 text-gray-600">{format(parseISO(res.check_in), 'dd/MM/yyyy')}</td>
                     <td className="p-4 text-gray-600">{format(parseISO(res.check_out), 'dd/MM/yyyy')}</td>

@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Calendar, Home, BedDouble, FileText, LogOut, Menu } from 'lucide-react';
 import { useState } from 'react';
+import { LayoutDashboard, CalendarDays, BarChart3, X, Users } from 'lucide-react';
 
 export function DashboardLayout() {
   const { signOut, profile } = useAuth();
@@ -12,6 +13,7 @@ export function DashboardLayout() {
     { path: '/', icon: Home, label: 'Dashboard' },
     { path: '/calendar', icon: Calendar, label: 'Calendário' },
     { path: '/reservations', icon: BedDouble, label: 'Reservas' },
+    { path: '/guests', icon: Users, label: 'Hóspedes' },
     { path: '/rooms', icon: BedDouble, label: 'Quartos' },
     { path: '/reports', icon: FileText, label: 'Relatórios' },
   ];

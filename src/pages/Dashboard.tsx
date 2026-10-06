@@ -8,6 +8,7 @@ import { BedDouble, CheckCircle2, LogIn, LogOut, CalendarDays } from 'lucide-rea
 type Reservation = {
   id: string; check_in: string; check_out: string; 
   guest_name: string; status: string; room: { name: string };
+  guest?: { name: string }; // <-- ADICIONE ESTA LINHA AQUI
 };
 
 export function Dashboard() {
@@ -47,7 +48,7 @@ export function Dashboard() {
     // 2. Busca reservas relevantes (que terminam hoje ou depois)
     const { data: resData } = await supabase
       .from('reservations')
-      .select('*, room:rooms(name)')
+      .select('*, room:rooms(name), guest:guests(name)')
       .neq('status', 'cancelled')
       .gte('check_out', todayStr)
       .order('check_in', { ascending: true });
@@ -163,7 +164,7 @@ export function Dashboard() {
                   <tbody className="divide-y divide-gray-100">
                     {upcomingRes.map((res) => (
                       <tr key={res.id} className="hover:bg-gray-50">
-                        <td className="p-4 font-semibold text-gray-900">{res.guest_name}</td>
+                        <td className="p-4 font-semibold text-gray-900">{res.guest?.name || res.guest_name}</td>
                         <td className="p-4 text-gray-600">{res.room.name}</td>
                         <td className="p-4">
                           <span className={`px-2 py-1 rounded text-sm font-medium ${res.check_in === todayStr ? 'bg-yellow-100 text-yellow-800' : 'text-gray-600'}`}>
