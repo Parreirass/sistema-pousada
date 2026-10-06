@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Calendar, Home, BedDouble, FileText, LogOut, Menu } from 'lucide-react';
 import { useState } from 'react';
-import { LayoutDashboard, CalendarDays, BarChart3, X, Users } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 export function DashboardLayout() {
   const { signOut, profile } = useAuth();

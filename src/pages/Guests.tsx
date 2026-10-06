@@ -116,7 +116,15 @@ export function Guests() {
                   <td className="p-4 text-gray-600">{guest.document || '-'}<br/><span className="text-xs text-gray-500">{guest.phone}</span></td>
                   <td className="p-4 text-gray-600">{guest.city ? `${guest.city}/${guest.state}` : '-'}</td>
                   <td className="p-4 text-gray-600">{getLastHosting(guest.reservations)}</td>
-                  <td className="p-4 text-right"><button onClick={() => openModal(guest)} className="text-blue-600 hover:text-blue-800 p-2 rounded-md hover:bg-blue-50"><Edit2 size={18} /></button></td>
+                  {loading ? (
+                    <tr>
+                        <td colSpan={5} className="p-8 text-center text-gray-500">
+                        Carregando...
+                        </td>
+                    </tr>
+                    ) : filteredGuests.map(guest => (
+                        <td className="p-4 text-right"><button onClick={() => openModal(guest)} className="text-blue-600 hover:text-blue-800 p-2 rounded-md hover:bg-blue-50"><Edit2 size={18} /></button></td>
+                    ))}
                 </tr>
               ))}
             </tbody>
